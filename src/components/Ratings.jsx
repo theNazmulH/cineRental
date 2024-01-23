@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import Star from "../assets/star.svg";
-const Ratings = () => {
+const Ratings = ({ rating }) => {
+    const stars = Array(rating).fill(Star);
     return (
         <div className="flex items-center space-x-1 mb-5">
-            <img src={Star} width={14} height={14} alt />
-            <img src={Star} width={14} height={14} alt />
-            <img src={Star} width={14} height={14} alt />
-            <img src={Star} width={14} height={14} alt />
+            {stars.map((star, index) => (
+                <img key={index} src={star} width={14} height={14} />
+            ))}
         </div>
     );
 };
