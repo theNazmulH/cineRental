@@ -5,10 +5,12 @@ import CheckoutIcon from "../assets/icons/checkout.svg";
 import { movieContext } from "../contexts";
 import { getImgUrl } from "../utils/cine-utility";
 const Cart = ({ onClose }) => {
-    const { cartData, setCartData } = useContext(movieContext);
+    const { state, dispatch } = useContext(movieContext);
     const deleteCart = (id) => {
-        const newCart = cartData.filter((cart) => cart.id !== id);
-        setCartData(newCart);
+        dispatch({
+            type: "REMOVE_FROM_CART",
+            payload: id,
+        });
     };
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
@@ -18,9 +20,9 @@ const Cart = ({ onClose }) => {
                         Your Carts
                     </h2>
                     <div className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
-                        {cartData.length === 0
+                        {state.cartData.length === 0
                             ? "Cart is empty"
-                            : cartData.map((sCart) => (
+                            : state.cartData.map((sCart) => (
                                   <div
                                       className="grid grid-cols-[1fr_auto] gap-4"
                                       key={sCart.id}

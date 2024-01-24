@@ -4,13 +4,16 @@ import { movieContext } from "../contexts";
 import { getImgUrl } from "../utils/cine-utility";
 import Tag from "./../assets/tag.svg";
 const Modal = ({ movie, onClose }) => {
-    const { cartData, setCartData } = useContext(movieContext);
+    const { state, dispatch } = useContext(movieContext);
     const onCartAdd = (e, movie) => {
-        const found = cartData.find((item) => {
+        const found = state.cartData.find((item) => {
             return item.id === movie.id;
         });
         if (!found) {
-            setCartData([...cartData, movie]);
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: movie,
+            });
         }
     };
     return (

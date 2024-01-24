@@ -9,7 +9,7 @@ import Ratings from "./Ratings";
 const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const { cartData, setCartData } = useContext(movieContext);
+    const { state, dispatch } = useContext(movieContext);
     const handleModalClose = () => {
         setSelectedMovie(null);
         setShowModal(false);
@@ -19,12 +19,10 @@ const MovieCard = ({ movie }) => {
         setShowModal(true);
     };
     const handleAddToCart = (movie) => {
-        const found = cartData.find((item) => {
-            return item.id === movie.id;
+        dispatch({
+            type: "ADD_TO_CART",
+            payload: movie,
         });
-        if (!found) {
-            setCartData([...cartData, movie]);
-        }
     };
     return (
         <>
