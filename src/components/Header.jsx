@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
+import { ThemeContext, movieContext } from "../contexts";
 import Moon from "./../assets/icons/moon.svg";
-// import Sun from "./../assets/icons/sun.svg";
-import { movieContext } from "../contexts";
+import Sun from "./../assets/icons/sun.svg";
 import Logo from "./../assets/logo.svg";
 import Ring from "./../assets/ring.svg";
 import ShoppingCart from "./../assets/shopping-cart.svg";
@@ -9,9 +9,11 @@ import Cart from "./Cart";
 const Header = () => {
     const [showCartModal, setShowCartModal] = useState(false);
     const { cartData } = useContext(movieContext);
+    const { darkMode, setDarkMode } = useContext(ThemeContext);
     const handleShowModal = () => {
         setShowCartModal(false);
     };
+    console.log(darkMode);
 
     return (
         <>
@@ -34,8 +36,19 @@ const Header = () => {
                             <a
                                 className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
                                 href="#"
+                                onClick={() => setDarkMode(!darkMode)}
                             >
-                                <img src={Moon} width={24} height={24} alt />
+                                {darkMode ? (
+                                    <img src={Sun} width={24} height={24} alt />
+                                ) : (
+                                    <img
+                                        src={Moon}
+                                        width={24}
+                                        height={24}
+                                        alt
+                                    />
+                                )}
+                                {/* <img src={Moon} width={24} height={24} alt /> */}
                             </a>
                         </li>
                         <li>
