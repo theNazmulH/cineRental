@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Moon from "./../assets/icons/moon.svg";
 // import Sun from "./../assets/icons/sun.svg";
+import { movieContext } from "../contexts";
 import Logo from "./../assets/logo.svg";
 import Ring from "./../assets/ring.svg";
 import ShoppingCart from "./../assets/shopping-cart.svg";
 import Cart from "./Cart";
 const Header = () => {
     const [showCartModal, setShowCartModal] = useState(false);
+    const { cartData } = useContext(movieContext);
     const handleShowModal = () => {
         setShowCartModal(false);
     };
@@ -38,7 +40,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a
-                                className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                                className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block relative"
                                 href="#"
                                 onClick={() => setShowCartModal(true)}
                             >
@@ -48,6 +50,11 @@ const Header = () => {
                                     height={24}
                                     alt
                                 />
+                                {cartData.length > 0 && (
+                                    <span className="bg-primary inline-block rounded-full size-6 text-center absolute -right-4 -top-2">
+                                        {cartData.length}
+                                    </span>
+                                )}
                             </a>
                         </li>
                     </ul>

@@ -1,7 +1,18 @@
 /* eslint-disable react/prop-types */
+import { useContext } from "react";
+import { movieContext } from "../contexts";
 import { getImgUrl } from "../utils/cine-utility";
 import Tag from "./../assets/tag.svg";
 const Modal = ({ movie, onClose }) => {
+    const { cartData, setCartData } = useContext(movieContext);
+    const onCartAdd = (e, movie) => {
+        const found = cartData.find((item) => {
+            return item.id === movie.id;
+        });
+        if (!found) {
+            setCartData([...cartData, movie]);
+        }
+    };
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[420px] sm:max-w-[600px] lg:max-w-[984px] p-4 max-h-[90vh] overflow-auto">
@@ -28,6 +39,7 @@ const Modal = ({ movie, onClose }) => {
                             <a
                                 className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
                                 href="#"
+                                onClick={(e) => onCartAdd(e, movie)}
                             >
                                 <img src={Tag} alt />
                                 <span>{movie.price} | Add to Cart</span>

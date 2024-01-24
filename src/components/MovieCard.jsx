@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { movieContext } from "../contexts";
 import { getImgUrl } from "../utils/cine-utility";
 import Tag from "./../assets/tag.svg";
 import Modal from "./Modal";
@@ -8,6 +9,7 @@ import Ratings from "./Ratings";
 const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const { cartData, setCartData } = useContext(movieContext);
     const handleModalClose = () => {
         setSelectedMovie(null);
         setShowModal(false);
@@ -15,6 +17,14 @@ const MovieCard = ({ movie }) => {
     const handleMovieSelection = (movie) => {
         setSelectedMovie(movie);
         setShowModal(true);
+    };
+    const handleAddToCart = (movie) => {
+        const found = cartData.find((item) => {
+            return item.id === movie.id;
+        });
+        if (!found) {
+            setCartData([...cartData, movie]);
+        }
     };
     return (
         <>
@@ -37,9 +47,10 @@ const MovieCard = ({ movie }) => {
                     <a
                         className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
                         href="#"
+                        onClick={() => handleAddToCart(movie)}
                     >
                         <img src={Tag} alt />
-                        <span> {movie.price} | Add to Cart</span>
+                        <span> $ {movie.price} | Add to Cart</span>
                     </a>
                 </figcaption>
             </figure>
