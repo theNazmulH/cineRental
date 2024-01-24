@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import { movieContext } from "../contexts";
 import { getImgUrl } from "../utils/cine-utility";
 import Tag from "./../assets/tag.svg";
@@ -19,10 +20,16 @@ const MovieCard = ({ movie }) => {
         setShowModal(true);
     };
     const handleAddToCart = (movie) => {
-        dispatch({
-            type: "ADD_TO_CART",
-            payload: movie,
-        });
+        const found = state.cartData.find((item) => item.id === movie.id);
+        if (!found) {
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: movie,
+            });
+            toast.success(`Added ${movie.title} to cart`);
+        } else {
+            toast.error(` ${movie.title} Already in cart`);
+        }
     };
     return (
         <>

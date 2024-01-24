@@ -13,8 +13,6 @@ const Header = () => {
     const handleShowModal = () => {
         setShowCartModal(false);
     };
-    console.log(darkMode);
-
     return (
         <>
             {showCartModal && <Cart onClose={handleShowModal} />}

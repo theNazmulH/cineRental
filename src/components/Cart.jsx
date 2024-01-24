@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useContext } from "react";
+import { toast } from "react-toastify";
 import DeleteIcon from "../assets/delete.svg";
 import CheckoutIcon from "../assets/icons/checkout.svg";
 import { movieContext } from "../contexts";
 import { getImgUrl } from "../utils/cine-utility";
 const Cart = ({ onClose }) => {
     const { state, dispatch } = useContext(movieContext);
-    const deleteCart = (id) => {
+    const deleteCart = (id, title) => {
         dispatch({
             type: "REMOVE_FROM_CART",
             payload: id,
         });
+        toast.success(`Removed ${title} from cart`);
     };
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
@@ -49,7 +51,10 @@ const Cart = ({ onClose }) => {
                                           <button
                                               className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
                                               onClick={() =>
-                                                  deleteCart(sCart.id)
+                                                  deleteCart(
+                                                      sCart.id,
+                                                      sCart.title
+                                                  )
                                               }
                                           >
                                               <img
